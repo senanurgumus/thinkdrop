@@ -1,0 +1,16 @@
+# client ve server node_modules
+client/node_modules/
+server/node_modules/
+
+# .env dosyaları (şifre içerir!)
+.env
+client/.env
+server/.env
+
+# Derleme çıktıları
+client/build/
+dist/
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
