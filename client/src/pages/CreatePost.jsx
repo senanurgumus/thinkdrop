@@ -6,37 +6,62 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);         
+  const [previewUrl, setPreviewUrl] = useState("");  // Önizleme için
 
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!user) {
-      alert("You must be logged in to create a post.");
-      return;
-    }
+  if (!user) {
+    alert("You must be logged in to create a post.");
+    return;
+  }
 
-    const newPost = {
-      title,
-      category,
-      content,
-      author: user.username,
-    };
+  let imagePath = "";
+
+  if (image) {
+    const formData = new FormData();
+    formData.append("image", image);
 
     try {
-      await axios.post("http://localhost:5000/api/posts", newPost);
-      alert("Post created successfully!");
-      setTitle("");
-      setCategory("");
-      setContent("");
-      navigate("/"); // anasayfaya yönlendirme
+      const res = await axios.post("http://localhost:5000/api/upload", formData);
+      console.log("UPLOAD response:", res.data); // ✅
+      imagePath = new URL(res.data.imageUrl).pathname;
     } catch (err) {
-      console.error("Error creating post:", err);
-      alert("Failed to create post.");
+      console.error("Image upload failed:", err);
+      alert("Image upload failed.");
+      return;
     }
+  }
+
+  const newPost = {
+    title,
+    category,
+    content,
+    author: user.username,
+    image: imagePath,
   };
+
+  console.log("NEW POST:", newPost); // ✅
+
+  try {
+    await axios.post("http://localhost:5000/api/posts", newPost);
+    alert("Post created successfully!");
+    setTitle("");
+    setCategory("");
+    setContent("");
+    setImage(null);
+    setPreviewUrl("");
+    navigate("/");
+  } catch (err) {
+    console.error("Error creating post:", err);
+    alert("Failed to create post.");
+  }
+};
+
 
   return (
     <div style={{ padding: "30px", maxWidth: "700px", margin: "auto" }}>
@@ -50,6 +75,7 @@ const CreatePost = () => {
           required
           style={inputStyle}
         />
+
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -62,6 +88,28 @@ const CreatePost = () => {
           <option value="education">Education</option>
           <option value="travel">Travel</option>
         </select>
+
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            setImage(file);
+            if (file) setPreviewUrl(URL.createObjectURL(file));
+          }}
+          style={{ marginBottom: "10px" }}
+        />
+
+        {previewUrl && (
+          <div style={{ marginBottom: "10px" }}>
+            <img
+              src={previewUrl}
+              alt="Preview"
+              style={{ width: "100%", maxHeight: "300px", objectFit: "cover" }}
+            />
+          </div>
+        )}
+
         <textarea
           placeholder="Write your content here..."
           value={content}
@@ -69,6 +117,7 @@ const CreatePost = () => {
           required
           style={{ ...inputStyle, height: "150px" }}
         />
+
         <button type="submit" style={buttonStyle}>
           ➕ Publish
         </button>

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
 
-// Create a new post
+// ✅ image artık frontend'den geliyor, multer'a gerek yok
 router.post("/", async (req, res) => {
   try {
     const newPost = new Post({
@@ -10,20 +10,20 @@ router.post("/", async (req, res) => {
       content: req.body.content,
       category: req.body.category,
       author: req.body.author,
+      image: req.body.image || "",  // ✅ BURAYI EKLE
     });
 
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);
   } catch (err) {
+    console.error("Post oluşturulurken hata:", err);
     res.status(500).json(err);
   }
 });
 
-// GET /api/posts?category=technology gibi filtreleme desteği
+
 router.get("/", async (req, res) => {
-// Backend (/routes/posts.js içinde)
-const category = req.query.category?.toLowerCase();
-posts = await Post.find({ category });
+  const category = req.query.category?.toLowerCase();
   try {
     const posts = category
       ? await Post.find({ category })
@@ -35,7 +35,6 @@ posts = await Post.find({ category });
   }
 });
 
-// Get single post by ID
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -46,7 +45,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Delete a post
 router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findByIdAndDelete(req.params.id);
@@ -57,7 +55,6 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// Update a post
 router.put("/:id", async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
@@ -67,6 +64,7 @@ router.put("/:id", async (req, res) => {
           title: req.body.title,
           content: req.body.content,
           category: req.body.category,
+          image: req.body.image || "", // opsiyonel olarak image güncellenebilir
         },
       },
       { new: true }
@@ -82,7 +80,6 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// PUT /api/posts/:id/like
 router.put("/:id/like", async (req, res) => {
   const { username } = req.body;
   try {
@@ -105,7 +102,6 @@ router.put("/:id/like", async (req, res) => {
   }
 });
 
-// Kullanıcının yazılarını çek
 router.get("/user/:username", async (req, res) => {
   try {
     const posts = await Post.find({ author: req.params.username });
@@ -114,6 +110,5 @@ router.get("/user/:username", async (req, res) => {
     res.status(500).json({ message: "Kullanıcı postları alınamadı", error: err.message });
   }
 });
-
 
 module.exports = router;

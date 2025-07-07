@@ -1,3 +1,4 @@
+// ... diğer importlar
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -14,9 +15,13 @@ const PostDetail = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
+    
     const fetchPost = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/posts/${id}`);
+        console.log("GELEN POST:", res.data);
+console.log("IMAGE:", res.data.image); // 👈 Bunu ekle!
+
         setPost(res.data);
         setLikedByUser(res.data.likedUsers?.includes(user?.username));
         setLoading(false);
@@ -97,6 +102,24 @@ const PostDetail = () => {
       <h2 style={{ marginBottom: "10px" }}>{post.title}</h2>
       <p><strong>📂 Category:</strong> {post.category}</p>
       <p><strong>✍️ Author:</strong> {post.author}</p>
+
+      {/* 👇 Görsel varsa göster */}
+      {post.image && (
+  <div style={{ margin: "20px 0" }}>
+    <img
+      src={`http://localhost:5000${post.image}`} // ✅ BURASI!
+      alt="Post Visual"
+      style={{
+        width: "100%",
+        maxHeight: "400px",
+        objectFit: "cover",
+        borderRadius: "10px"
+      }}
+    />
+  </div>
+)}
+
+
       <hr style={{ margin: "20px 0" }} />
       <p style={{ fontSize: "1.1em", lineHeight: "1.6" }}>{post.content}</p>
 
