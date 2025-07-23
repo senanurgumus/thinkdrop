@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./EditPost.css"; // Yeni CSS dosyasını eklemeyi unutma ✨
 
 const EditPost = () => {
   const { id } = useParams();
@@ -47,11 +48,11 @@ const EditPost = () => {
     }
   };
 
-  if (loading) return <p style={{ textAlign: "center" }}>Loading...</p>;
+  if (loading) return <p className="loading-message">Loading...</p>;
 
   return (
-    <div style={{ padding: "30px", maxWidth: "700px", margin: "auto" }}>
-      <h2 style={{ marginBottom: "20px", color: "#1e293b" }}>✏️ Edit Your Post</h2>
+    <div className="edit-container">
+      <h2 className="edit-title">✏️ Edit Your Post</h2>
       <form onSubmit={handleUpdate}>
         <input
           type="text"
@@ -60,7 +61,7 @@ const EditPost = () => {
           onChange={handleChange}
           required
           placeholder="Post Title"
-          style={styles.input}
+          className="edit-input"
         />
         <input
           type="text"
@@ -69,7 +70,7 @@ const EditPost = () => {
           onChange={handleChange}
           required
           placeholder="Category (e.g., Technology)"
-          style={styles.input}
+          className="edit-input"
         />
         <textarea
           name="content"
@@ -77,40 +78,14 @@ const EditPost = () => {
           onChange={handleChange}
           required
           placeholder="Edit your content here..."
-          style={styles.textarea}
+          className="edit-textarea"
         />
-        <button type="submit" style={styles.button}>
+        <button type="submit" className="edit-button">
           💾 Save Changes
         </button>
       </form>
     </div>
   );
-};
-
-const styles = {
-  input: {
-    width: "100%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "5px",
-    border: "1px solid #ccc"
-  },
-  textarea: {
-    width: "100%",
-    height: "150px",
-    padding: "10px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-    marginBottom: "10px"
-  },
-  button: {
-    backgroundColor: "#3b82f6",
-    color: "white",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer"
-  }
 };
 
 export default EditPost;

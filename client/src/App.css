@@ -1,20 +1,65 @@
+/* Arka plan animasyon */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #fcd3de, #d4fc79);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Arka plan animasyon keyframes */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Uygulama konteyneri */
 .App {
-  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
   text-align: center;
-  margin-top: 50px;
 }
 
+/* Input alanları */
 input {
-  margin: 5px;
-  padding: 8px;
-  width: 250px;
+  margin: 10px auto;
+  padding: 10px;
+  width: 280px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 15px;
 }
 
+/* Butonlar */
 button {
-  margin-top: 10px;
-  padding: 8px 16px;
+  margin-top: 15px;
+  padding: 10px 18px;
+  background-color: #ff85a2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff5c8a;
 }

@@ -1,0 +1,88 @@
+.profile-container {
+  max-width: 880px;
+  margin: 60px auto;
+  padding: 40px 50px;
+  background: linear-gradient(135deg, #fefaf6, #e0f0ff); /* krem & bebek mavisi */
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-title {
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: #2d3c4a;
+  text-align: center;
+}
+
+.profile-subtitle {
+  font-size: 20px;
+  color: #4b4b4b;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.profile-empty {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+}
+
+.profile-post-card {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 20px 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.profile-post-card:hover {
+  transform: translateY(-4px);
+}
+
+.profile-post-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.profile-buttons {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+.profile-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.profile-btn.view {
+  background-color: #a0c4ff;
+  color: #fff;
+}
+
+.profile-btn.view:hover {
+  background-color: #82b1ff;
+}
+
+.profile-btn.edit {
+  background-color: #bde0fe;
+  color: #333;
+}
+
+.profile-btn.edit:hover {
+  background-color: #a2d2ff;
+}

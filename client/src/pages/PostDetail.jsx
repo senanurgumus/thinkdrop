@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "./PostDetail.css"; // ✨ CSS dosyasını dahil ettik
+import "./PostDetail.css";
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -67,7 +67,6 @@ const PostDetail = () => {
       navigate("/");
     } catch (err) {
       console.error("Error deleting post:", err);
-      alert("An error occurred while deleting the post.");
     }
   };
 
@@ -88,33 +87,30 @@ const PostDetail = () => {
   };
 
   const handleLikeComment = async (commentId) => {
-  try {
-    const res = await axios.put(`http://localhost:5000/api/comments/${commentId}/like`, {
-      username: user?.username,
-    });
+    try {
+      const res = await axios.put(`http://localhost:5000/api/comments/${commentId}/like`, {
+        username: user?.username,
+      });
 
-    // Güncellenen yorum bilgisiyle comments dizisini güncelle
-    setComments((prevComments) =>
-      prevComments.map((c) =>
-        c._id === commentId ? { ...c, likes: res.data.likes, likedUsers: res.data.likedUsers } : c
-      )
-    );
-  } catch (err) {
-    console.error("Comment like error:", err);
-  }
-};
+      setComments((prev) =>
+        prev.map((c) =>
+          c._id === commentId ? { ...c, likes: res.data.likes, likedUsers: res.data.likedUsers } : c
+        )
+      );
+    } catch (err) {
+      console.error("Comment like error:", err);
+    }
+  };
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-
     try {
       const res = await axios.post("http://localhost:5000/api/comments", {
         postId: id,
         username: user?.username || "anonymous",
         text: newComment,
       });
-
       setComments([...comments, res.data]);
       setNewComment("");
     } catch (err) {
@@ -157,88 +153,52 @@ const PostDetail = () => {
   if (!post) return <p>Post not found</p>;
 
   return (
-    <div style={{ padding: "30px", maxWidth: "800px", margin: "auto" }}>
+    <div className="post-detail">
       <h2>{post.title}</h2>
       <p><strong>📂 Category:</strong> {post.category}</p>
       <p><strong>✍️ Author:</strong> {post.author}</p>
-      
+      {post.image && <img className="post-image" src={`http://localhost:5000${post.image}`} alt="Post" />}
+      <hr />
+      <p className="post-content">{post.content}</p>
 
-      {post.image && (
-        <div style={{ margin: "20px 0" }}>
-          <img
-            src={`http://localhost:5000${post.image}`}
-            alt="Post"
-            style={{
-              width: "100%",
-              maxHeight: "400px",
-              objectFit: "cover",
-              borderRadius: "10px",
-            }}
-          />
-        </div>
-      )}
-
-      <hr style={{ margin: "20px 0" }} />
-      <p style={{ fontSize: "1.1em", lineHeight: "1.6" }}>{post.content}</p>
-
-      <div style={{ marginTop: "20px", marginBottom: "30px" }}>
-        <button
-          onClick={handleLike}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: likedByUser ? "#f44336" : "#4CAF50",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          {likedByUser ? "💔 Unlike" : "❤️ Like"}
-        </button>
-        <span style={{ marginLeft: "15px", fontWeight: "bold" }}>
-          {post.likes || 0} likes
-        </span>
-      </div>
+      <button className={`like-btn ${likedByUser ? "liked" : ""}`} onClick={handleLike}>
+        {likedByUser ? "💔 Unlike" : "❤️ Like"} {post.likes || 0}
+      </button>
 
       {isAuthor && (
-        <div style={{ marginBottom: "30px" }}>
-          <Link to={`/edit/${post._id}`}>
-            <button style={editBtnStyle}>✏️ Edit Post</button>
-          </Link>
-          <button onClick={handleDelete} style={deleteBtnStyle}>
-            🗑️ Delete Post
-          </button>
+        <div className="author-controls">
+          <Link to={`/edit/${post._id}`} className="edit-btn">✏️ Edit Post</Link>
+          <button onClick={handleDelete} className="delete-btn">🗑️ Delete</button>
         </div>
       )}
 
-      <div style={{ marginTop: "40px" }}>
+      <div className="comments-section">
         <h3>💬 Comments</h3>
-        {comments.length === 0 ? (
-          <p>No comments yet.</p>
-        ) : (
+        {comments.length === 0 ? <p>No comments yet.</p> : (
           comments.map((c) => (
-            <div key={c._id} style={{ background: "#f2f2f2", padding: "10px", marginBottom: "10px", borderRadius: "5px" }}>
+            <div key={c._id} className="comment-box">
               <strong>{c.username}</strong>
               <p>{c.text}</p>
-              <div style={{ display: "flex", gap: "10px" }}>
-                <button onClick={() => handleLikeComment(c._id)} style={{ border: "none", background: "none" }}>
-                {c.likedUsers?.includes(user?.username) ? "💔" : "💖"} {c.likes || 0}
-              </button>
-                <button onClick={() => setReplyInputs(prev => ({ ...prev, [c._id]: prev[c._id] === undefined ? "" : undefined }))} style={{ border: "none", background: "transparent", cursor: "pointer" }}>💬 Reply</button>
+              <div className="comment-actions">
+                <button onClick={() => handleLikeComment(c._id)}>
+                  {c.likedUsers?.includes(user?.username) ? "💔" : "💖"} {c.likes || 0}
+                </button>
+                <button onClick={() => setReplyInputs(prev => ({ ...prev, [c._id]: prev[c._id] === undefined ? "" : undefined }))}>
+                  💬 Reply
+                </button>
               </div>
               {replyInputs[c._id] !== undefined && (
-                <form onSubmit={(e) => handleReplySubmit(e, c._id)} style={{ marginTop: "10px" }}>
+                <form onSubmit={(e) => handleReplySubmit(e, c._id)} className="reply-form">
                   <textarea
                     value={replyInputs[c._id]}
                     onChange={(e) => setReplyInputs(prev => ({ ...prev, [c._id]: e.target.value }))}
                     placeholder="Write a reply..."
-                    style={{ width: "100%", padding: "10px", borderRadius: "5px" }}
                   />
-                  <button type="submit" style={{ marginTop: "5px", padding: "6px 16px", backgroundColor: "#4CAF50", color: "white", border: "none", borderRadius: "5px" }}>Send</button>
+                  <button type="submit">Send</button>
                 </form>
               )}
               {replies[c._id] && replies[c._id].map((r) => (
-                <div key={r._id} style={{ background: "#e6e6e6", padding: "8px", marginTop: "8px", marginLeft: "20px", borderRadius: "5px" }}>
+                <div key={r._id} className="reply-box">
                   <strong>{r.username}</strong>
                   <p>{r.text}</p>
                 </div>
@@ -246,39 +206,18 @@ const PostDetail = () => {
             </div>
           ))
         )}
-        <form onSubmit={handleCommentSubmit} style={{ marginTop: "20px" }}>
+
+        <form onSubmit={handleCommentSubmit} className="comment-form">
           <textarea
             placeholder="Write a comment..."
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            style={{ width: "100%", height: "100px", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
           />
-          <button type="submit" style={{ marginTop: "10px", padding: "10px 20px", backgroundColor: "#2196F3", color: "white", border: "none", borderRadius: "5px" }}>
-            Post Comment
-          </button>
+          <button type="submit">Post Comment</button>
         </form>
       </div>
     </div>
   );
-};
-
-const editBtnStyle = {
-  backgroundColor: "#FFA500",
-  color: "white",
-  padding: "10px 20px",
-  marginRight: "10px",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
-};
-
-const deleteBtnStyle = {
-  backgroundColor: "red",
-  color: "white",
-  padding: "10px 20px",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
 };
 
 export default PostDetail;

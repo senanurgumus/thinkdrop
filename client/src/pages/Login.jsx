@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,66 +30,40 @@ const Login = () => {
   };
 
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      minHeight: "100vh",
-      backgroundColor: "#f0f2f5"
-    }}>
-      <div style={{
-        background: "#fff",
-        padding: "40px",
-        borderRadius: "12px",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        width: "100%",
-        maxWidth: "400px"
-      }}>
-        <h2 style={{ textAlign: "center", marginBottom: "24px" }}>Welcome Back</h2>
-        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <input
-            type="email"
-            placeholder="Email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={inputStyle}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={inputStyle}
-          />
-          <button type="submit" style={buttonStyle}>Login</button>
+    <div className="login-container">
+      <div className="login-card">
+        <img src="/logo-thinkdrop.png" alt="ThinkDrop Logo" className="logo" />
+        <h2 className="login-title">Welcome back 👋</h2>
+        <p className="login-subtext">Glad to see you again on ThinkDrop 💭</p>
+        <form className="login-form" onSubmit={handleLogin}>
+          <div className="input-group">
+            <span>📧</span>
+            <input
+              type="email"
+              placeholder="Email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <span>🔒</span>
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit">Login</button>
         </form>
-        <p style={{ textAlign: "center", marginTop: "16px" }}>
+        <p className="login-footer">
           Don't have an account? <a href="/register">Register</a>
         </p>
       </div>
     </div>
   );
-};
-
-const inputStyle = {
-  padding: "12px",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-  fontSize: "16px"
-};
-
-const buttonStyle = {
-  padding: "12px",
-  borderRadius: "6px",
-  border: "none",
-  backgroundColor: "#007BFF",
-  color: "white",
-  fontWeight: "bold",
-  fontSize: "16px",
-  cursor: "pointer",
-  transition: "background-color 0.3s"
 };
 
 export default Login;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import PostSkeleton from "../components/PostSkeleton"; // ✅ yol doğruysa
+import PostSkeleton from "../components/PostSkeleton";
 import "./AllPosts.css";
 
 const AllPosts = () => {
@@ -103,12 +103,18 @@ const AllPosts = () => {
               className="post-card fade-in"
               style={{ animationDelay: `${i * 100}ms` }}
             >
-              {post.image && (
+              {post.image ? (
                 <img
                   src={`http://localhost:5000${post.image}`}
                   alt={post.title}
                   className="post-img"
                 />
+              ) : (
+                <div className="post-img placeholder-img">
+                  <p style={{ textAlign: "center", color: "#aaa", fontStyle: "italic" }}>
+                    No image available
+                  </p>
+                </div>
               )}
               <div className="post-content">
                 <h3>{post.title}</h3>
@@ -117,7 +123,7 @@ const AllPosts = () => {
                 </p>
                 <p>{post.content.slice(0, 100)}...</p>
                 <Link to={`/posts/${post._id}`}>
-                  <button className="read-btn">📖 Read More</button>
+                  <button className="read-btn"> Read More</button>
                 </Link>
               </div>
             </div>

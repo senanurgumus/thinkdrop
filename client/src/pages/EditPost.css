@@ -1,0 +1,62 @@
+.edit-container {
+  max-width: 720px;
+  margin: 60px auto;
+  padding: 40px 50px;
+  background: linear-gradient(135deg, #fefaf6, #e0f0ff); /* krem & bebek mavisi */
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.edit-title {
+  font-size: 26px;
+  margin-bottom: 28px;
+  color: #2d3c4a;
+  text-align: center;
+}
+
+.edit-input, .edit-textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.edit-textarea {
+  height: 160px;
+  resize: vertical;
+}
+
+.edit-button {
+  background-color: #91caff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: block;
+  margin: auto;
+}
+
+.edit-button:hover {
+  background-color: #63b3ed;
+}
+
+.loading-message {
+  text-align: center;
+  font-style: italic;
+  margin-top: 80px;
+}

@@ -1,0 +1,118 @@
+.create-post-container {
+  max-width: 780px;
+  margin: 50px auto;
+  padding: 40px 50px;
+  background: linear-gradient(135deg, #fdfaf5, #e7f2ff); /* kremden bebek mavisine */
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.create-post-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2f3a48;
+  font-size: 26px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.create-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.create-post-form input[type="text"],
+.create-post-form select,
+.create-post-form textarea {
+  padding: 14px 16px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  transition: all 0.3s;
+  background-color: #ffffff;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.create-post-form input:focus,
+.create-post-form select:focus,
+.create-post-form textarea:focus {
+  outline: none;
+  border-color: #a0c4ff;
+  box-shadow: 0 0 0 3px rgba(160, 196, 255, 0.25);
+}
+
+.create-post-form textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+input[type="file"] {
+  padding: 10px;
+  background: #f8fbff;
+  border: 1px dashed #b3cde0;
+  border-radius: 10px;
+  transition: border 0.2s;
+}
+
+input[type="file"]:hover {
+  border-color: #a0c4ff;
+}
+
+.image-preview img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+}
+
+.image-preview img:hover {
+  transform: scale(1.02);
+}
+
+.create-post-form button {
+  background: linear-gradient(90deg, #b7dffc, #c8e7d8); /* mavi-krem geçiş */
+  color: #2f3a48;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.create-post-form button:hover {
+  background: linear-gradient(90deg, #a0c4ff, #dceff2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(120, 150, 170, 0.15);
+}
+
+.emoji {
+  font-size: 28px;
+  animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(-5px);}
+}

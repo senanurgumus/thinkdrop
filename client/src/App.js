@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -9,6 +10,7 @@ import PostDetail from "./pages/PostDetail";
 import EditPost from "./pages/EditPost";
 import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar"; // ✨ Navbar bileşeni
+
 
 const App = () => {
   return (

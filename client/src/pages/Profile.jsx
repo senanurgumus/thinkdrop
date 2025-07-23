@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import "./Profile.css"; // CSS dosyasını eklemeyi unutma 🪄
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -27,33 +28,24 @@ const Profile = () => {
   }, [user, navigate]);
 
   return (
-    <div style={{ padding: "30px", maxWidth: "800px", margin: "auto" }}>
-      <h2 style={{ marginBottom: "10px" }}>👤 {user.username}'s Profile</h2>
-      <h3 style={{ marginBottom: "30px" }}>📝 My Blog Posts</h3>
+    <div className="profile-container">
+      <h2 className="profile-title">👤 {user.username}'s Profile</h2>
+      <h3 className="profile-subtitle">📝 My Blog Posts</h3>
 
       {posts.length === 0 ? (
-        <p>You haven't written any posts yet.</p>
+        <p className="profile-empty">You haven't written any posts yet.</p>
       ) : (
         posts.map((post) => (
-          <div
-            key={post._id}
-            style={{
-              backgroundColor: "#f7f7f7",
-              padding: "20px",
-              borderRadius: "10px",
-              marginBottom: "20px",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
-            }}
-          >
-            <h4 style={{ marginBottom: "8px" }}>{post.title}</h4>
+          <div className="profile-post-card" key={post._id}>
+            <h4 className="profile-post-title">{post.title}</h4>
             <p><strong>Category:</strong> {post.category}</p>
             <p><strong>Created:</strong> {new Date(post.createdAt).toLocaleDateString()}</p>
-            <div style={{ marginTop: "10px" }}>
+            <div className="profile-buttons">
               <Link to={`/posts/${post._id}`}>
-                <button style={buttonStyle}>👁️ View</button>
+                <button className="profile-btn view">👁️ View</button>
               </Link>
               <Link to={`/edit/${post._id}`}>
-                <button style={{ ...buttonStyle, marginLeft: "10px" }}>✏️ Edit</button>
+                <button className="profile-btn edit">✏️ Edit</button>
               </Link>
             </div>
           </div>
@@ -61,15 +53,6 @@ const Profile = () => {
       )}
     </div>
   );
-};
-
-const buttonStyle = {
-  backgroundColor: "#4CAF50",
-  color: "white",
-  padding: "8px 16px",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer"
 };
 
 export default Profile;

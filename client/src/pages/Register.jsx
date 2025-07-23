@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./Register.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -25,76 +26,52 @@ const Register = () => {
   };
 
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      minHeight: "100vh",
-      backgroundColor: "#f5f5f5",
-    }}>
-      <div style={{
-        background: "#fff",
-        padding: "40px",
-        borderRadius: "12px",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        width: "100%",
-        maxWidth: "400px",
-      }}>
-        <h2 style={{ textAlign: "center", marginBottom: "24px" }}>Create an Account</h2>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <input
-            name="username"
-            placeholder="Username"
-            onChange={handleChange}
-            value={formData.username}
-            required
-            style={inputStyle}
-          />
-          <input
-            name="email"
-            placeholder="Email"
-            type="email"
-            onChange={handleChange}
-            value={formData.email}
-            required
-            style={inputStyle}
-          />
-          <input
-            name="password"
-            placeholder="Password"
-            type="password"
-            onChange={handleChange}
-            value={formData.password}
-            required
-            style={inputStyle}
-          />
-          <button type="submit" style={buttonStyle}>Register</button>
+    <div className="register-container">
+      <div className="register-card">
+        <img src="/logo-thinkdrop.png" alt="ThinkDrop Logo" className="logo" />
+        <h2 className="register-title">Create your ThinkDrop account ✨</h2>
+        <p className="register-subtext">Join our creative blogging world 💭</p>
+        <form className="register-form" onSubmit={handleSubmit}>
+          <div className="input-group">
+            <span>👤</span>
+            <input
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <span>📧</span>
+            <input
+              name="email"
+              placeholder="Email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <span>🔒</span>
+            <input
+              name="password"
+              placeholder="Password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit">Register</button>
         </form>
-        <p style={{ textAlign: "center", marginTop: "16px" }}>
-          Already have an account? <a href="/login">Login</a>
+        <p className="register-footer">
+          Already have an account? <a href="/login">Login here</a>
         </p>
       </div>
     </div>
   );
-};
-
-const inputStyle = {
-  padding: "12px",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-  fontSize: "16px"
-};
-
-const buttonStyle = {
-  padding: "12px",
-  borderRadius: "6px",
-  border: "none",
-  backgroundColor: "#4CAF50",
-  color: "white",
-  fontWeight: "bold",
-  fontSize: "16px",
-  cursor: "pointer",
-  transition: "background-color 0.3s"
 };
 
 export default Register;
