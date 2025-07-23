@@ -1,0 +1,45 @@
+.skeleton-card {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 12px;
+  width: 100%;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-img {
+  height: 160px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #e2e2e2;
+}
+
+.skeleton-text {
+  height: 16px;
+  border-radius: 6px;
+  background-color: #e2e2e2;
+}
+
+.skeleton-btn {
+  width: 100px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #e2e2e2;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

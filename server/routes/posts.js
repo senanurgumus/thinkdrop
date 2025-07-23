@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
 
-// ✅ image artık frontend'den geliyor, multer'a gerek yok
+// Yeni post oluşturma
 router.post("/", async (req, res) => {
   try {
     const newPost = new Post({
@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
       content: req.body.content,
       category: req.body.category,
       author: req.body.author,
-      image: req.body.image || "",  // ✅ BURAYI EKLE
+      image: req.body.image || "",
     });
 
     const savedPost = await newPost.save();
@@ -21,20 +21,26 @@ router.post("/", async (req, res) => {
   }
 });
 
-
+// Tüm postları getir - kategori ve başlık arama ile birlikte
 router.get("/", async (req, res) => {
-  const category = req.query.category?.toLowerCase();
-  try {
-    const posts = category
-      ? await Post.find({ category })
-      : await Post.find();
+  const { category, search, limit = 100 } = req.query;
 
+  const query = {};
+  if (category) query.category = category.toLowerCase();
+  if (search) query.title = { $regex: search, $options: "i" };
+
+  try {
+    const posts = await Post.find(query)
+      .sort({ createdAt: -1 })
+      .limit(Number(limit));
     res.status(200).json(posts);
   } catch (err) {
+    console.error("Postları getirirken hata:", err);
     res.status(500).json(err);
   }
 });
 
+// Tekil post getir
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -45,16 +51,24 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Post silme (sadece yazar silebilir)
 router.delete("/:id", async (req, res) => {
   try {
-    const post = await Post.findByIdAndDelete(req.params.id);
+    const post = await Post.findById(req.params.id);
+    const { username } = req.body;
+
     if (!post) return res.status(404).json("Post not found");
-    res.status(200).json("Post deleted successfully");
+    if (post.author !== username)
+      return res.status(403).json("Yetkisiz: Bu post'u sadece yazarı silebilir");
+
+    await post.deleteOne();
+    res.status(200).json("Post başarıyla silindi");
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+// Post güncelleme
 router.put("/:id", async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
@@ -64,7 +78,7 @@ router.put("/:id", async (req, res) => {
           title: req.body.title,
           content: req.body.content,
           category: req.body.category,
-          image: req.body.image || "", // opsiyonel olarak image güncellenebilir
+          image: req.body.image || "",
         },
       },
       { new: true }
@@ -80,6 +94,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// Like / Unlike
 router.put("/:id/like", async (req, res) => {
   const { username } = req.body;
   try {
@@ -102,6 +117,7 @@ router.put("/:id/like", async (req, res) => {
   }
 });
 
+// Belirli kullanıcının postları
 router.get("/user/:username", async (req, res) => {
   try {
     const posts = await Post.find({ author: req.params.username });
