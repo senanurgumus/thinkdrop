@@ -22,7 +22,7 @@ const Login = () => {
       );
 
       alert("Login successful!");
-      navigate("/");
+      navigate("/all");
     } catch (err) {
       console.error("Login failed:", err);
       alert("Invalid credentials");

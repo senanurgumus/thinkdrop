@@ -1,0 +1,133 @@
+.home-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  padding: 60px 150px;
+  background: linear-gradient(to right, #fefae0, #faedcd); /* pastel bej degrade */
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.home-left {
+  flex: 1;
+}
+
+.home-left h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: #7f5539; /* koyu toprak tonu */
+}
+
+.home-left h1 span {
+  color: #b08968; /* sıcak pastel kahve tonu */
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 30px;
+  color: #9c6644;
+  max-width: 520px;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 40px;
+  font-size: 1.15rem;
+  color: #8d6e63;
+}
+
+.features li {
+  margin-bottom: 14px;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.start-btn,
+.login-btn {
+  padding: 12px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.start-btn {
+  background-color: #ddb892; /* pastel kahverengi */
+  color: #3e2723;
+}
+
+.start-btn:hover {
+  background-color: #c49a6c;
+}
+
+.login-btn {
+  background-color: #e6ccb2; /* daha açık ton */
+  color: #3e2723;
+}
+
+.login-btn:hover {
+  background-color: #d4b199;
+}
+
+.home-right {
+  flex: 1;
+  text-align: right;
+}
+
+.home-right img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.brand-name {
+  font-size: 4rem;
+  color: #7f5539;
+  font-weight: 800;
+  background: linear-gradient(90deg, #b08968, #ddb892);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+  font-size: 1.3rem;
+  margin: 25px 0;
+  color: #7c4b30;
+  line-height: 1.8;
+}
+
+.highlight {
+  font-weight: 600;
+  color: #a47148;
+}
+
+.feature-box {
+  background-color: #fff7ed;
+  border-left: 6px solid #b08968;
+  padding: 20px 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  max-width: 550px; /* 🔥 EKLENDİ */
+}
+
+
+.feature-box p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  color: #5c4033;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.emoji {
+  font-size: 1.3rem;
+}

@@ -23,7 +23,8 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="nav-items">
-        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/all" className="nav-link">All Posts</Link>
+        <Link to="/gallery" className="nav-link">Gallery</Link> {/* 💖 Yeni eklendi */}
         <Link to="/create" className="nav-link">Create Post</Link>
         {user && <Link to="/profile" className="nav-link">My Profile</Link>}
         {user ? (

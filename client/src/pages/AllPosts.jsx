@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import PostSkeleton from "../components/PostSkeleton";
+import InspirationCard from "../components/InspirationCard"; // İlham kartı eklendi
 import "./AllPosts.css";
 
 const AllPosts = () => {
@@ -33,103 +34,132 @@ const AllPosts = () => {
   }, [category, searchTerm]);
 
   return (
-    <div style={{ padding: "40px", maxWidth: "1200px", margin: "auto" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "30px" }}>📚 All Blog Posts</h2>
-
-      {/* Filters */}
+    <div>
+      {/* Sabit sol ilham kartı */}
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "20px",
-          marginBottom: "30px",
+          position: "fixed",
+          top: "150px",
+          left: "30px",
+          width: "280px",
+          zIndex: 10,
         }}
       >
-        <div>
-          <label htmlFor="category">Category:</label>
-          <select
-            id="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            style={{
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #ccc",
-              marginLeft: "10px",
-            }}
-          >
-            <option value="">All</option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <input
-            type="text"
-            placeholder="🔍 Search by title..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #ccc",
-              width: "300px",
-            }}
-          />
-        </div>
+        <InspirationCard />
       </div>
 
-      {/* Posts */}
-      {loading ? (
-        <div className="grid">
-          {Array(6)
-            .fill(0)
-            .map((_, i) => (
-              <PostSkeleton key={i} />
-            ))}
-        </div>
-      ) : posts.length === 0 ? (
-        <p style={{ textAlign: "center" }}>No posts found.</p>
-      ) : (
-        <div className="grid">
-          {posts.map((post, i) => (
-            <div
-              key={post._id}
-              className="post-card fade-in"
-              style={{ animationDelay: `${i * 100}ms` }}
+      {/* Ana içerik */}
+      <div
+        style={{
+          marginLeft: "500px",
+          padding: "40px",
+          maxWidth: "1200px",
+          marginRight: "auto",
+        }}
+      >
+        <h2 style={{ textAlign: "center", marginBottom: "30px" }}>📚 All Blog Posts</h2>
+
+        {/* Filtre alanı */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "20px",
+            marginBottom: "30px",
+          }}
+        >
+          <div>
+            <label htmlFor="category">Category:</label>
+            <select
+              id="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              style={{
+                padding: "10px",
+                borderRadius: "8px",
+                border: "1px solid #ccc",
+                marginLeft: "10px",
+              }}
             >
-              {post.image ? (
-                <img
-                  src={`http://localhost:5000${post.image}`}
-                  alt={post.title}
-                  className="post-img"
-                />
-              ) : (
-                <div className="post-img placeholder-img">
-                  <p style={{ textAlign: "center", color: "#aaa", fontStyle: "italic" }}>
-                    No image available
-                  </p>
-                </div>
-              )}
-              <div className="post-content">
-                <h3>{post.title}</h3>
-                <p className="post-meta">
-                  {post.author} | {post.category}
-                </p>
-                <p>{post.content.slice(0, 100)}...</p>
-                <Link to={`/posts/${post._id}`}>
-                  <button className="read-btn"> Read More</button>
-                </Link>
-              </div>
-            </div>
-          ))}
+              <option value="">All</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="🔍 Search by title..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                padding: "10px",
+                borderRadius: "8px",
+                border: "1px solid #ccc",
+                width: "300px",
+              }}
+            />
+          </div>
         </div>
-      )}
+
+        {/* Post grid */}
+        {loading ? (
+          <div className="grid">
+            {Array(6)
+              .fill(0)
+              .map((_, i) => (
+                <PostSkeleton key={i} />
+              ))}
+          </div>
+        ) : posts.length === 0 ? (
+          <p style={{ textAlign: "center" }}>No posts found.</p>
+        ) : (
+          <div className="grid">
+            {posts.map((post, i) => (
+              <div
+                key={post._id}
+                className="post-card fade-in"
+                style={{ animationDelay: `${i * 100}ms` }}
+              >
+                {post.image ? (
+                  <img
+                    src={`http://localhost:5000${post.image}`}
+                    alt={post.title}
+                    className="post-img"
+                  />
+                ) : (
+                  <div className="post-img placeholder-img">
+                    <p
+                      style={{
+                        textAlign: "center",
+                        color: "#aaa",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      No image available
+                    </p>
+                  </div>
+                )}
+                <div className="post-content">
+                  <h3>{post.title}</h3>
+                  <p className="post-meta">
+                    {post.author} | {post.category}
+                  </p>
+                  <p>{post.content.slice(0, 100)}...</p>
+                  <Link to={`/posts/${post._id}`}>
+                    <button className="read-btn"> Read More</button>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
